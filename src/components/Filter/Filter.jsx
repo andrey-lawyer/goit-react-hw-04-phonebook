@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { nanoid } from 'nanoid';
 
-const Filter = ({ value, onChange, idUser }) => (
+const idUser = nanoid();
+
+const Filter = ({ value, onChange }) => (
   <FieldInput>
     <label htmlFor={idUser}>Find contacts by name</label>
     <InputFind id={idUser} type="text" value={value} onChange={onChange} />
@@ -28,5 +31,4 @@ export default Filter;
 Filter.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  idUser: PropTypes.string.isRequired,
 };

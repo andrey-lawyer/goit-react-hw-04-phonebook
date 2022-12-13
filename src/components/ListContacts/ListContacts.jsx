@@ -28,7 +28,7 @@ const ItemContact = styled.li`
   margin-top: 5px;
 `;
 const NameUser = styled.p`
-  margin 0;
+  margin: 0;
 `;
 const ButtonDel = styled.button`
   margin-right: 20px;

@@ -14,24 +14,22 @@ class App extends Component {
     ],
     filter: '',
   };
-  findInputId = nanoid();
-  formSubmithandle = date => {
-    // console.log(this.findInputId);
-    const newContacts = this.state.contacts;
-    const findIndex = newContacts.findIndex(
-      contact => contact.name === date.name
-    );
-    if (findIndex !== -1) {
-      return alert(`${date.name} is already in contacts`);
+  formSubmithandle = contact => {
+    const { contacts } = this.state;
+    const isInConacts = contacts.some(({ name }) => name === contact.name);
+
+    if (isInConacts) {
+      return alert(`${contact.name} is already in contacts`);
     }
-    newContacts.push(date);
-    this.setState({ contacts: newContacts });
-    // console.log(this.state.contacts);
+    this.setState(prevState => {
+      return {
+        contacts: [...prevState.contacts, { ...contact, id: nanoid() }],
+      };
+    });
   };
 
   changeFilter = e => {
     this.setState({ filter: e.currentTarget.value });
-    // console.log(this.state.filter);
   };
 
   getVisibleContacts = () => {
@@ -55,11 +53,7 @@ class App extends Component {
         <TitleH1>Phonebook</TitleH1>
         <ContactForm onSubmit={this.formSubmithandle} />
         <TitleH2>Contacts</TitleH2>
-        <Filter
-          idUser={this.findInputId}
-          value={this.state.filter}
-          onChange={this.changeFilter}
-        />
+        <Filter value={this.state.filter} onChange={this.changeFilter} />
         <ContactList
           contact={visibleContacts}
           onDeleteContact={this.deleteContact}

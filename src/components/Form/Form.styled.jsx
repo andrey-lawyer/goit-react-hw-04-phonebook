@@ -21,7 +21,7 @@ export const InputUser = styled.input`
 `;
 export const ButtonAdd = styled.button`
   width: 100px;
-  margin 0 auto;
+  margin: 0 auto;
   margin-top: 10px;
   padding: 3px;
   background-color: #e0ffff;
@@ -35,15 +35,3 @@ export const ButtonAdd = styled.button`
     background-color: rgb(135, 206, 250);
   }
 `;
-//   background-color: #e0ffff;
-//   width: 60px;
-//   border: solid 1px;
-//   border-radius: 2px;
-//   cursor: pointer;
-
-//   :hover,
-//   focus {
-//     transform: scale(1.15);
-//     background-color: rgb(135, 206, 250);
-//   }
-// `;
