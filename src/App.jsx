@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import ContactForm from './components/Form';
 import ContactList from './components/ListContacts';
 import Filter from './components/Filter';
-import { PhoneBook, TitleH1, TitleH2 } from 'App.styled';
+import { PhoneBook, TitleH1, TitleH2, Message } from 'App.styled';
 import { nanoid } from 'nanoid';
+
+const CONTACTS_KEY = 'contact_database';
+
 class App extends Component {
   state = {
     contacts: [
@@ -14,6 +17,20 @@ class App extends Component {
     ],
     filter: '',
   };
+
+  componentDidMount() {
+    const savedState = localStorage.getItem(CONTACTS_KEY);
+    if (savedState) {
+      this.setState({ contacts: JSON.parse(savedState) });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem(CONTACTS_KEY, JSON.stringify(this.state.contacts));
+    }
+  }
+
   formSubmithandle = contact => {
     const { contacts } = this.state;
     const isInConacts = contacts.some(({ name }) => name === contact.name);
@@ -48,16 +65,23 @@ class App extends Component {
 
   render() {
     const visibleContacts = this.getVisibleContacts();
+    const contactsUser = this.state.contacts;
     return (
       <PhoneBook>
         <TitleH1>Phonebook</TitleH1>
         <ContactForm onSubmit={this.formSubmithandle} />
         <TitleH2>Contacts</TitleH2>
-        <Filter value={this.state.filter} onChange={this.changeFilter} />
-        <ContactList
-          contact={visibleContacts}
-          onDeleteContact={this.deleteContact}
-        />
+        {contactsUser.length === 0 ? (
+          <Message>Your phone book is empty, add a contact</Message>
+        ) : (
+          <>
+            <Filter value={this.state.filter} onChange={this.changeFilter} />
+            <ContactList
+              contact={visibleContacts}
+              onDeleteContact={this.deleteContact}
+            />
+          </>
+        )}
       </PhoneBook>
     );
   }

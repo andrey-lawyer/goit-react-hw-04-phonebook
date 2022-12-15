@@ -15,3 +15,9 @@ export const TitleH1 = styled.h1`
 export const TitleH2 = styled.h2`
   text-align: center;
 `;
+
+export const Message = styled.p`
+  text-align: center;
+  font-size: 20px;
+  color: #e36707cf;
+`;
