@@ -9,10 +9,8 @@ class ContactForm extends Component {
   state = {
     name: '',
     number: '',
-    id: '',
   };
   handleSubmit = e => {
-    e.preventDefault();
     this.props.onSubmit(this.state);
     this.reset();
   };

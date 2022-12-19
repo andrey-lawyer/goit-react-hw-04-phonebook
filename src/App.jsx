@@ -6,22 +6,23 @@ import { PhoneBook, TitleH1, TitleH2, Message } from 'App.styled';
 import { nanoid } from 'nanoid';
 
 const CONTACTS_KEY = 'contact_database';
+const initialContacts = [
+  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+];
 
 class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
   componentDidMount() {
     const savedState = localStorage.getItem(CONTACTS_KEY);
     if (savedState) {
-      this.setState({ contacts: JSON.parse(savedState) });
+      this.setState({ contacts: JSON.parse(savedState) ?? initialContacts });
     }
   }
 
@@ -33,7 +34,9 @@ class App extends Component {
 
   formSubmithandle = contact => {
     const { contacts } = this.state;
-    const isInConacts = contacts.some(({ name }) => name === contact.name);
+    const isInConacts = contacts.some(
+      ({ name }) => name.toLowerCase() === contact.name.toLowerCase()
+    );
 
     if (isInConacts) {
       return alert(`${contact.name} is already in contacts`);
@@ -65,13 +68,14 @@ class App extends Component {
 
   render() {
     const visibleContacts = this.getVisibleContacts();
-    const contactsUser = this.state.contacts;
+    const { contacts } = this.state;
+    localStorage.clear();
     return (
       <PhoneBook>
         <TitleH1>Phonebook</TitleH1>
         <ContactForm onSubmit={this.formSubmithandle} />
         <TitleH2>Contacts</TitleH2>
-        {contactsUser.length === 0 ? (
+        {contacts.length === 0 ? (
           <Message>Your phone book is empty, add a contact</Message>
         ) : (
           <>
