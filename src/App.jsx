@@ -6,6 +6,7 @@ import { PhoneBook, TitleH1, TitleH2, Message } from 'App.styled';
 import { nanoid } from 'nanoid';
 
 const CONTACTS_KEY = 'contact_database';
+const emptyArray = [];
 const initialContacts = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
   { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
@@ -21,9 +22,13 @@ class App extends Component {
 
   componentDidMount() {
     const savedState = localStorage.getItem(CONTACTS_KEY);
-    if (savedState) {
-      this.setState({ contacts: JSON.parse(savedState) ?? initialContacts });
+    let parseState;
+    try {
+      parseState = JSON.parse(savedState) ?? initialContacts;
+    } catch (error) {
+      parseState = emptyArray;
     }
+    this.setState({ contacts: parseState });
   }
 
   componentDidUpdate(_, prevState) {
@@ -69,7 +74,7 @@ class App extends Component {
   render() {
     const visibleContacts = this.getVisibleContacts();
     const { contacts } = this.state;
-    localStorage.clear();
+    // localStorage.clear();
     return (
       <PhoneBook>
         <TitleH1>Phonebook</TitleH1>
