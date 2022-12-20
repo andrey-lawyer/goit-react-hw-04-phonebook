@@ -28,6 +28,7 @@ class App extends Component {
     } catch (error) {
       parseState = emptyArray;
     }
+
     this.setState({ contacts: parseState });
   }
 
