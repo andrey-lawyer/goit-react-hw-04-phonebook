@@ -8,9 +8,11 @@ export const PhoneBook = styled.div`
     0px 1px 1px rgba(0, 0, 0, 0.12);
   border-radius: 2%;
   padding: 10px;
+  
 `;
 export const TitleH1 = styled.h1`
   text-align: center;
+  
 `;
 export const TitleH2 = styled.h2`
   text-align: center;
